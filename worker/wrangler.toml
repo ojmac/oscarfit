@@ -1,0 +1,11 @@
+name = "oscarfit78-coach"
+main = "coach-worker.js"
+compatibility_date = "2026-01-01"
+
+# El ALLOWED_ORIGIN no es secreto, se define aquí directamente.
+# Cámbialo por la URL real de tu PWA cuando la tengas (ej. https://tuusuario.github.io)
+[vars]
+ALLOWED_ORIGIN = "*"
+
+# La API key SÍ es secreta. NO se pone aquí.
+# Se sube con: wrangler secret put ANTHROPIC_API_KEY
