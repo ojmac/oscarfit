@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1">
+<title>Oscar Fit 78</title>
+
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0f172a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Fit78">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="icon" href="icons/icon-192.png">
+
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div id="app">
+
+  <header class="topbar">
+    <h1>Oscar Fit 78</h1>
+    <div class="level-badge">⭐ <span id="level-label">Nivel 1</span></div>
+  </header>
+
+  <main>
+
+    <!-- DASHBOARD -->
+    <section id="section-dashboard" class="section active">
+      <h2>Dashboard</h2>
+
+      <div class="card">
+        <h3>Progreso hacia el objetivo</h3>
+        <div class="grid-2">
+          <div>
+            <div class="stat-value" id="dash-peso-actual">87.0 kg</div>
+            <div class="stat-label">Peso actual</div>
+          </div>
+          <div>
+            <div class="stat-value" id="dash-peso-objetivo">78.0 kg</div>
+            <div class="stat-label">Objetivo</div>
+          </div>
+        </div>
+        <div class="progress-bar"><div id="dash-progress-bar" style="width:0%"></div></div>
+        <div class="stat-label" id="dash-progress-text" style="margin-top:6px;">0% completado</div>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <div class="stat-value" id="dash-imc">—</div>
+          <div class="stat-label">IMC</div>
+        </div>
+        <div class="card">
+          <div class="stat-value" id="dash-racha">0 días</div>
+          <div class="stat-label">Racha activa</div>
+        </div>
+        <div class="card">
+          <div class="stat-value" id="dash-km">0.0 km</div>
+          <div class="stat-label">Distancia nadada</div>
+        </div>
+        <div class="card">
+          <div class="stat-value" id="dash-sinfumar">0 días</div>
+          <div class="stat-label">Sin fumar</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Evolución del peso</h3>
+        <canvas id="chart-dashboard-weight" height="160"></canvas>
+      </div>
+
+      <div class="card">
+        <h3>Registrar peso de hoy</h3>
+        <label for="input-peso-rapido">Peso (kg)</label>
+        <input type="number" step="0.1" id="input-peso-rapido" placeholder="Ej. 86.4">
+        <button id="btn-guardar-peso-rapido">Guardar peso</button>
+      </div>
+    </section>
+
+    <!-- NUTRICIÓN -->
+    <section id="section-nutricion" class="section">
+      <h2>Nutrición</h2>
+
+      <div class="card">
+        <h3>Objetivos diarios</h3>
+        <div class="grid-2">
+          <div><div class="stat-value">2300</div><div class="stat-label">kcal objetivo</div></div>
+          <div><div class="stat-value">160g</div><div class="stat-label">Proteína objetivo</div></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Agua 💧</h3>
+        <div class="grid-2">
+          <div><div class="stat-value" id="nutri-agua-hoy">0</div><div class="stat-label">vasos hoy</div></div>
+          <div style="display:flex;align-items:flex-end;"><button id="btn-add-agua" style="width:100%;">+ 1 vaso</button></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Cervezas 🍺</h3>
+        <div class="grid-2">
+          <div><div class="stat-value" id="nutri-cervezas-hoy">0</div><div class="stat-label">hoy</div></div>
+          <div style="display:flex;align-items:flex-end;"><button id="btn-add-cerveza" style="width:100%;">+ 1 cerveza</button></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Registro de comidas</h3>
+        <div class="placeholder">
+          Próximamente: registro de comidas con cálculo automático de calorías y macros, lista de la compra y recetas.
+        </div>
+      </div>
+    </section>
+
+    <!-- NATACIÓN -->
+    <section id="section-natacion" class="section">
+      <h2>Natación</h2>
+
+      <div class="card">
+        <h3>Entrenamiento de hoy</h3>
+        <div class="stat-label" id="swim-plan-hoy">—</div>
+      </div>
+
+      <div class="card">
+        <h3>Registrar sesión rápida</h3>
+        <label for="input-swim-metros">Metros nadados</label>
+        <input type="number" id="input-swim-metros" placeholder="Ej. 1500">
+        <label for="input-swim-tipo">Tipo de sesión</label>
+        <select id="input-swim-tipo">
+          <option value="resistencia">Resistencia</option>
+          <option value="tecnica">Técnica + respiración</option>
+          <option value="series">Series</option>
+          <option value="tirada_larga">Tirada larga</option>
+        </select>
+        <button id="btn-guardar-swim">Guardar entrenamiento</button>
+      </div>
+
+      <div class="card">
+        <h3>Historial reciente</h3>
+        <div class="row-list" id="swim-historial">
+          <div class="placeholder">Sin sesiones registradas todavía.</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Herramientas</h3>
+        <div class="placeholder">
+          Próximamente: cronómetro, descansos automáticos y ritmos por 100 m.
+        </div>
+      </div>
+    </section>
+
+    <!-- CALISTENIA -->
+    <section id="section-calistenia" class="section">
+      <h2>Calistenia</h2>
+
+      <div class="card">
+        <h3>Registrar ejercicio</h3>
+        <label for="input-cal-ejercicio">Ejercicio</label>
+        <select id="input-cal-ejercicio">
+          <option>Flexiones</option>
+          <option>Sentadillas</option>
+          <option>Zancadas</option>
+          <option>Remo con bandas</option>
+          <option>Dominadas asistidas</option>
+          <option>Fondos</option>
+          <option>Plancha (segundos)</option>
+          <option>Hollow Hold (segundos)</option>
+          <option>Bird Dog</option>
+          <option>Dead Bug</option>
+        </select>
+        <label for="input-cal-reps">Repeticiones / series</label>
+        <input type="number" id="input-cal-reps" placeholder="Ej. 3x12">
+        <button id="btn-guardar-cal">Guardar</button>
+      </div>
+
+      <div class="card">
+        <h3>Historial reciente</h3>
+        <div class="row-list" id="cal-historial">
+          <div class="placeholder">Sin registros todavía.</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Progresiones y récords</h3>
+        <div class="placeholder">Próximamente: seguimiento de progresiones y mejores marcas por ejercicio.</div>
+      </div>
+    </section>
+
+    <!-- SALUD -->
+    <section id="section-salud" class="section">
+      <h2>Salud</h2>
+
+      <div class="card">
+        <h3>Registro diario</h3>
+        <label for="input-cintura">Cintura (cm)</label>
+        <input type="number" step="0.1" id="input-cintura" placeholder="Ej. 92.5">
+        <label for="input-sueno">Horas de sueño</label>
+        <input type="number" step="0.5" id="input-sueno" placeholder="Ej. 7.5">
+        <label for="input-animo">Estado de ánimo (1-5)</label>
+        <input type="number" min="1" max="5" id="input-animo" placeholder="Ej. 4">
+        <label for="input-lumbar">Dolor lumbar (0-10)</label>
+        <input type="number" min="0" max="10" id="input-lumbar" placeholder="Ej. 2">
+        <label for="input-hombro">Molestias de hombro (0-10)</label>
+        <input type="number" min="0" max="10" id="input-hombro" placeholder="Ej. 1">
+        <button id="btn-guardar-salud">Guardar registro de hoy</button>
+      </div>
+
+      <div class="card">
+        <h3>Fotos mensuales</h3>
+        <div class="placeholder">Próximamente: galería de fotos de progreso mensuales.</div>
+      </div>
+    </section>
+
+    <!-- ESTADÍSTICAS -->
+    <section id="section-estadisticas" class="section">
+      <h2>Estadísticas</h2>
+
+      <div class="card">
+        <h3>Peso</h3>
+        <canvas id="chart-stats-weight" height="180"></canvas>
+      </div>
+
+      <div class="card">
+        <h3>Cintura</h3>
+        <canvas id="chart-stats-waist" height="180"></canvas>
+      </div>
+
+      <div class="card">
+        <h3>Kilómetros nadados (acumulado)</h3>
+        <canvas id="chart-stats-swim" height="180"></canvas>
+      </div>
+
+      <div class="card">
+        <h3>Cervezas por semana</h3>
+        <div class="placeholder">Próximamente, cuando haya más datos registrados.</div>
+      </div>
+    </section>
+
+    <!-- COACH IA -->
+    <section id="section-coach" class="section">
+      <h2>Coach IA</h2>
+
+      <div class="card" id="coach-config-card" style="display:none;">
+        <h3>Configuración</h3>
+        <p class="stat-label">Pega aquí la URL de tu Worker (ver worker/README.md).</p>
+        <input type="text" id="input-coach-endpoint" placeholder="https://oscarfit78-coach.tu-subdominio.workers.dev">
+        <button id="btn-guardar-endpoint">Guardar</button>
+      </div>
+
+      <div class="card" id="coach-chat-card">
+        <div class="chat-messages" id="coach-messages"></div>
+        <div class="chat-input-row">
+          <input type="text" id="input-coach-mensaje" placeholder="Escribe al Coach IA...">
+          <button id="btn-coach-enviar">➤</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- BACKUPS -->
+    <section id="section-backups" class="section">
+      <h2>Copias de seguridad</h2>
+
+      <div class="card">
+        <h3>Exportar datos</h3>
+        <p class="stat-label">Genera un archivo JSON con todos tus datos (peso, entrenamientos, nutrición, salud, gamificación).</p>
+        <button id="btn-export">Exportar copia de seguridad</button>
+      </div>
+
+      <div class="card">
+        <h3>Importar datos</h3>
+        <p class="stat-label">Restaura tus datos desde un archivo exportado previamente. Esto sustituirá los datos actuales.</p>
+        <input type="file" id="input-import" accept="application/json">
+        <button id="btn-import" class="secondary">Importar copia de seguridad</button>
+      </div>
+
+      <div class="card">
+        <h3>Borrar todos los datos</h3>
+        <p class="stat-label">Elimina permanentemente todos los registros de este dispositivo.</p>
+        <button id="btn-reset" class="danger">Borrar todo</button>
+      </div>
+    </section>
+
+  </main>
+
+  <nav class="bottom-nav">
+    <button class="nav-item active" data-section="dashboard"><span class="icon">🏠</span>Inicio</button>
+    <button class="nav-item" data-section="nutricion"><span class="icon">🍽️</span>Nutrición</button>
+    <button class="nav-item" data-section="natacion"><span class="icon">🏊</span>Natación</button>
+    <button class="nav-item" data-section="calistenia"><span class="icon">💪</span>Calistenia</button>
+    <button class="nav-item" data-section="salud"><span class="icon">❤️</span>Salud</button>
+    <button class="nav-item" data-section="estadisticas"><span class="icon">📊</span>Stats</button>
+    <button class="nav-item" data-section="coach"><span class="icon">🤖</span>Coach IA</button>
+    <button class="nav-item" data-section="backups"><span class="icon">☁️</span>Backups</button>
+  </nav>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+<script src="js/db.js"></script>
+<script src="js/gamification.js"></script>
+<script src="js/router.js"></script>
+<script src="js/app.js"></script>
+<script src="js/coach.js"></script>
+</body>
+</html>
